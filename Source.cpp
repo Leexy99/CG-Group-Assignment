@@ -1,279 +1,149 @@
 #include <windows.h>
 #include <stdlib.h>
-#include <gl\GL.h>
-#include <gl\GLU.h>
-#include <gl\glut.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include <gl/glut.h>
 #include <math.h>
 
 #define SCREEN_WIDTH 1280
-#define SCREEN_LENGTH 720
-#define PI 3.141592653589793238
+#define SCREEN_HEIGHT 720
+#define PI 3.142
 
-void myInit(void){
-    glClearColor(0.0, 0.0, 0.0, 0.0); // sets background color to white
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0.0, SCREEN_WIDTH, 0.0, SCREEN_LENGTH);
+//body
+void rectangle(int x, int y, int w, int h) {
+	glBegin(GL_POLYGON);
+		glVertex2i(x, y);
+		glVertex2i(x + w, y);
+		glVertex2i(x + w, y + h);
+		glVertex2i(x , y +h);
+	glEnd();
 }
 
-void myDisplay(void){
-    glClear(GL_COLOR_BUFFER_BIT); // clears the screen
-    glColor3f(1.0f, 0.5f, 0.0f); // sets the drawing colour
-    glPointSize(4.0);
-
-    glBegin(GL_POLYGON);
-    glVertex2i(0, 0);
-    glVertex2i(1280, 0);
-    glVertex2i(1280, 300);
-    glVertex2i(0, 300);
-    glEnd();
-
-    glColor3f(0.0f, 0.5f, 1.0f);
-    glBegin(GL_POLYGON);
-    glVertex2i(0, 300);
-    glVertex2i(1280, 300);
-    glVertex2i(1280, 720);
-    glVertex2i(0, 720);
-    glEnd();
-
-    //hat
-    glColor3f(1.0f,0.0f,0.4f);
-    glBegin(GL_TRIANGLES);
-    glVertex2i(580, 450);
-    glVertex2i(720, 450);
-    glVertex2i(650, 550);
-    glEnd();
-
-    glColor3f(0.9f,1.0f,0.0f);
-    glLineWidth(2.0);
-    glBegin(GL_LINES);
-    glVertex2i(600, 450);
-    glVertex2i(600, 478);
-
-    glVertex2i(610, 450);
-    glVertex2i(610, 490);
-     
-    glVertex2i(620, 450);
-    glVertex2i(620, 505);
-
-    glVertex2i(630, 450);
-    glVertex2i(630, 520);
-
-    glVertex2i(640, 450);
-    glVertex2i(640, 535);
-
-    glVertex2i(650, 450);
-    glVertex2i(650, 548);
-
-    glVertex2i(660, 450);
-    glVertex2i(660, 535);
-
-    glVertex2i(670, 450);
-    glVertex2i(670, 520);
-
-    glVertex2i(680, 450);
-    glVertex2i(680, 505);
-
-    glVertex2i(690, 450);
-    glVertex2i(690, 490);
-
-    glVertex2i(700, 450);
-    glVertex2i(700, 478);
-
-    glEnd();
-
-    //face
-    glColor3f(1.0f, 1.0f, 0.9f);
-    glBegin(GL_POLYGON);
-    glVertex2i(580, 340);
-    glVertex2i(720, 340);
-    glVertex2i(720, 450);
-    glVertex2i(580, 450);
-    glEnd();
-
-    //eye
-    GLfloat x_position, y_position, th = 0;
-    int count;
-    glColor3f(0.0f, 0.0f, 0.0f);
-    for (count = 1; count <= 10000; count++){
-        th = th + 0.01;
-        x_position = 620 + 10 * cos(th);
-        y_position = 410 + 20 * sin(th);
-        glBegin(GL_POINTS);
-        glVertex2f(x_position, y_position);
-        glEnd();
-    }
-
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.01;
-        x_position = 680 + 10 * cos(th);
-        y_position = 410 + 20 * sin(th);
-        glBegin(GL_POINTS);
-        glVertex2f(x_position, y_position);
-        glEnd();
-    }
-
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 620 + 5 * cos(th);
-        y_position = 410 + 10 * sin(th);
-        glColor3f(0.0f,0.0f, 0.0f);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 680 + 5 * cos(th);
-        y_position = 410 + 10 * sin(th);
-        glColor3f(0.0f, 0.0f, 0.0f);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd(); 
-
-    //mouth
-    glColor3f(1,1,1);
-    glBegin(GL_POLYGON);
-    glVertex2i(635, 350);
-    glVertex2i(665, 350);
-    glVertex2i(665, 370);
-    glVertex2i(635, 370);
-    glEnd();
-
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINES);
-    glVertex2i(635, 350);
-    glVertex2i(635, 370);
-
-    glVertex2i(635, 350);
-    glVertex2i(665, 350);
-
-    glVertex2i(665, 350);
-    glVertex2i(665, 370);
-
-    glVertex2i(665, 370);
-    glVertex2i(635, 370);
-
-    glVertex2i(635, 360);
-    glVertex2i(665, 360);
-    glEnd();
-
-    //body
-    glColor3f(1.0f, 1.0f, 0.9f);
-    glBegin(GL_QUADS);
-    glVertex2i(610, 340);
-    glVertex2i(600, 240);
-    glVertex2i(700, 240);
-    glVertex2i(690, 340);
-    glEnd();
-
-    glColor3f(1.0f, 1.0f, 0.9f);
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 590 + 30 * cos(th);
-        y_position = 310 + 10 * sin(th);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 710 + 30 * cos(th);
-        y_position = 310 + 10 * sin(th);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 620 + 10 * cos(th);
-        y_position = 230 + 30 * sin(th);
-        glColor3f(1.0f, 1.0f, 0.9f);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 680 + 10 * cos(th);
-        y_position = 230 + 30 * sin(th);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-
-    glColor3f(0.0f,0.0f,0.0f);
-    glBegin(GL_LINES);
-    glVertex2i(605, 280);
-    glVertex2i(695, 280);
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    for (count = 1; count <= 10000; count++) {
-        th = th + 0.001;
-        x_position = 650 + 5 * cos(th);
-        y_position = 270 + 5 * sin(th);
-        glVertex2d(x_position, y_position);
-    }
-    glEnd();
-
-    glBegin(GL_LINES);
-    glVertex2i(610, 340);
-    glVertex2i(650, 330);
-
-    glVertex2i(650, 330);
-    glVertex2i(690, 340);
-
-    glVertex2i(650, 330);
-    glVertex2i(650, 280);
-
-    glVertex2i(590, 320);
-    glVertex2i(590, 300);
-
-    glVertex2i(710, 320);
-    glVertex2i(710, 300);
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    glVertex2i(645, 310);
-    glVertex2i(655, 310);
-    glVertex2i(655, 320);
-    glVertex2i(645, 320);
-    glEnd();
-
-    glBegin(GL_POLYGON);
-    glVertex2i(645, 290);
-    glVertex2i(655, 290);
-    glVertex2i(655, 300);
-    glVertex2i(645, 300);
-    glEnd();
-
-    glColor3f(1.0f, 0.5f, 0.0f);
-    glBegin(GL_TRIANGLES);
-    glVertex2i(640, 240);
-    glVertex2i(660, 240);
-    glVertex2i(650, 260);
-    glEnd();
-
-    glFlush(); //sends all output to display 
+//left leg
+void rectangle_left(int x, int y, int w, int h) {
+	glBegin(GL_POLYGON);
+	glVertex2i(x, y);
+	glVertex2i(x + w, y);
+	glVertex2i(x + w, y + h);
+	glVertex2i(x, y + h);
+	glEnd();
 }
-int main(int argc, char** argv){
-    glutInit(&argc, argv); 
 
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); //sets the display mode
+//right leg
+void rectangle_right(int x, int y, int w, int h) {
+	glBegin(GL_POLYGON);
+	glVertex2i(x, y);
+	glVertex2i(x + w, y);
+	glVertex2i(x + w, y + h);
+	glVertex2i(x, y + h);
+	glEnd();
+}
 
-    glutInitWindowSize(SCREEN_WIDTH, SCREEN_LENGTH); //sets the window size
 
-    glutCreateWindow("Kelefei"); //creates the window and sets the title
+//circle
+void nGon(int n, int x, int y, int r) {
+	double inc = 2 * PI / (double)n;
+	glBegin(GL_POLYGON);
+		for (double theta = 0.0; theta <= 2*PI; theta += inc) {
+			glVertex2i(r * cos(theta) + x, r * sin(theta) + y);
+			}
+	
+	glEnd();
+}
 
-    glutDisplayFunc(myDisplay); //runs function
+//bottom
+void trapezium(int x, int y, int w, int h) {
+	glBegin(GL_POLYGON);
+	glVertex2i(x - w / 8, y + h);
+	glVertex2i(x + w + w / 8, y + h);
+	glVertex2i(x + w, y + h + h / 2);
+	glVertex2i(x, y + h + h / 2);
+	glEnd();
+}
 
-    myInit(); 
+//right hand
+void triangle_right(int x, int y, int w, int h) {
+	glBegin(GL_TRIANGLES);
+		glVertex2i(x, y);
+		glVertex2i(x + w, y + h);
+		glVertex2i(x + w, y);
+	glEnd();
+}
 
-    glutMainLoop(); 
+//left hand
+void triangle_left(int x, int y, int w, int h) {
+	glBegin(GL_TRIANGLES);
+	glVertex2i(x, y);
+	glVertex2i(x - w, y + h);
+	glVertex2i(x-w , y);
+	glEnd();
+}
+
+//hat
+void triangle_even(int x, int y, int w, int h) {
+	glBegin(GL_TRIANGLES);
+	glVertex2i(x, y);
+	glVertex2i(x + w, y);
+	glVertex2i(x+(0.5*w) , y+h);
+	glEnd();
+}
+
+void god() {
+	//body
+	glColor3ub(0, 193, 255);
+	rectangle(SCREEN_WIDTH * 0.375, SCREEN_HEIGHT * 0.425, SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.3);
+	glColor3ub(106, 90, 205);
+	trapezium(SCREEN_WIDTH*0.375, SCREEN_HEIGHT*0.0035, SCREEN_WIDTH*0.25, 200);
+	
+	//head
+	glColor3ub(250, 250, 0);
+	triangle_even(SCREEN_WIDTH*0.48, 625, 50, SCREEN_HEIGHT * 0.07);
+	glColor3ub(255, 0, 0);
+	nGon(360, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.8, 50);
+
+	//hands
+	glColor3ub(255, 165, 0);
+	triangle_right(SCREEN_WIDTH * 0.625, SCREEN_HEIGHT * 0.60625, 250, SCREEN_HEIGHT * 0.1);
+	glColor3ub(255, 0, 0);
+	nGon(360, SCREEN_WIDTH * 0.8425, SCREEN_HEIGHT * 0.65, 35);
+	glColor3ub(255, 165, 0);
+	triangle_left(SCREEN_WIDTH * 0.37, SCREEN_HEIGHT * 0.60625, 250, SCREEN_HEIGHT * 0.1);
+	glColor3ub(255, 0, 0);
+	nGon(360, SCREEN_WIDTH * 0.15, SCREEN_HEIGHT * 0.65, 35);
+
+	//legs
+	rectangle_left(SCREEN_WIDTH * 0.375, SCREEN_HEIGHT* 0.05, SCREEN_WIDTH * 0.0625, SCREEN_HEIGHT * 0.225);
+	rectangle_right(SCREEN_WIDTH * 0.5625, SCREEN_HEIGHT * 0.05, SCREEN_WIDTH * 0.0625, SCREEN_HEIGHT * 0.225);
+}
+
+
+
+
+void display() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	god();
+	glFlush();
+	glutSwapBuffers();
+}
+
+
+
+void initGL() {
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+}
+
+
+int  main(int argc , char** argv ) {
+	glutInitDisplayMode(GLUT_DOUBLE);
+	glutInit(&argc, argv);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	glutCreateWindow("God character haha");
+	glutDisplayFunc(display);
+
+	initGL();
+	glutMainLoop();
+
 }
