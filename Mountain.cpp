@@ -11,7 +11,16 @@
 using namespace std;
 
 void mountain() {
-    ///mountain
+
+    ///mountain3
+    glBegin(GL_POLYGON);
+    glColor3f(0.11, 0.20, 0.20);
+    glVertex3f(-1.1, -0.7, -1.0);
+    glVertex3f(-0.5, 0.3, -1.0);
+    glVertex3f(0.1, -0.7, -1.0);
+    glEnd();
+
+    ///mountain1&2
     glBegin(GL_POLYGON);
     glColor3f(0.11, 0.23, 0.36);
     glVertex3f(-0.9, -0.7, -1.0);
@@ -56,7 +65,7 @@ int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(400, 400);
+    glutInitWindowSize(1280, 740);
     glutCreateWindow("Mountain");
     glutDisplayFunc(drawScene);
     glutMainLoop();
